@@ -10,5 +10,17 @@ the data can be sent as URL encoded data or in jsom formated. in html forms, the
 
   <img width="805" alt="image" src="https://github.com/user-attachments/assets/cf1d7103-28de-4339-bb61-a0bff946fce6">
 
-to see the request body we can use the Postman 
+
+We can send some body data by using postman -> body tab to submit some data. dont forget to change the request type to POST. 
+
+once you submit, Postman will submit data to the server and the server will resive the data. but we have to make changes in the server side to recieve the data.
+In postman once we post data, they will come as HttpRequestStream. 
+
+String requestBodyString;
+using(StreamReader reader = new StreamReader(context.Request.Body)){
+    requestBodyString = await reader.ReadToEndAsync();
+    await context.Response.WriteAsync($"<div> the body is : {requestBodyString} </div>");
+}
+
+
 
