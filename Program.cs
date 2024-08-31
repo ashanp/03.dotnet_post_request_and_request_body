@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Net.Mime;
 using System.Reflection.Metadata.Ecma335;
+using Microsoft.Extensions.Primitives;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
@@ -27,5 +28,11 @@ using(StreamReader reader = new StreamReader(context.Request.Body)){
     await context.Response.WriteAsync($"<div> the body is : {requestBodyString} </div>");
 }
 
+    // using dictionary we can decode the key pair values passed as body in proper format
+Dictionary<string, StringValues> dict = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(requestBodyString);
+        foreach (var item in dict)
+        {
+            await context.Response.WriteAsync($"<div>response: {item}\n</div>");
+        }
 });
 app.Run();
